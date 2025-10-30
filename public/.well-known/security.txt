@@ -1,0 +1,8 @@
+Contact: mailto:security@beewton.com
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: fr, en
+Canonical: https://beewton.com/.well-known/security.txt
+
+# Politique de divulgation responsable
+# Si vous découvrez une faille de sécurité, veuillez nous contacter de manière responsable.
+# Nous nous engageons à répondre dans les 48 heures.
