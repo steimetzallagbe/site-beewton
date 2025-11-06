@@ -12,6 +12,7 @@ import BlogPost from './pages/BlogPost';
 import Legal from './pages/Legal';
 import Privacy from './pages/Privacy';
 import Cookies from './pages/Cookies';
+import JobDetail from './pages/JobDetail';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -54,6 +55,8 @@ function App() {
         return <Privacy />;
       case 'cookies':
         return <Cookies />;
+      case 'job-detail':
+        return <JobDetail jobId={currentPostId} onNavigate={handleNavigate} />;
       default:
         return <Home onNavigate={handleNavigate} />;
     }

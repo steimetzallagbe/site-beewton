@@ -178,6 +178,7 @@ const Careers: React.FC<CareersProps> = ({ onNavigate }) => {
               return (
                 <div
                   key={index}
+                  onClick={() => onNavigate('job-detail', position.title)}
                   className="bg-white border-2 border-gray-200 rounded-xl p-8 hover:shadow-xl transition-all duration-300 cursor-pointer group"
                 >
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
