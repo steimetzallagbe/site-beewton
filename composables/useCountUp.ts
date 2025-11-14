@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
-
 interface UseCountUpOptions {
   end: number;
   duration?: number;
@@ -8,34 +6,33 @@ interface UseCountUpOptions {
 }
 
 export const useCountUp = ({ end, duration = 2000, suffix = '', decimals = 0 }: UseCountUpOptions) => {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const count = ref(0);
+  const isVisible = ref(false);
+  const elementRef = ref<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  onMounted(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true);
+        if (entry.isIntersecting && !isVisible.value) {
+          isVisible.value = true;
         }
       },
       { threshold: 0.3 }
     );
 
-    const currentElement = elementRef.current;
-    if (currentElement) {
-      observer.observe(currentElement);
+    if (elementRef.value) {
+      observer.observe(elementRef.value);
     }
 
-    return () => {
-      if (currentElement) {
-        observer.unobserve(currentElement);
+    onBeforeUnmount(() => {
+      if (elementRef.value) {
+        observer.unobserve(elementRef.value);
       }
-    };
-  }, [isVisible]);
+    });
+  });
 
-  useEffect(() => {
-    if (!isVisible) return;
+  watch(isVisible, (newVal) => {
+    if (!newVal) return;
 
     const startTime = Date.now();
     const endTime = startTime + duration;
@@ -47,24 +44,27 @@ export const useCountUp = ({ end, duration = 2000, suffix = '', decimals = 0 }: 
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       const currentCount = easeOutQuart * end;
 
-      setCount(currentCount);
+      count.value = currentCount;
 
       if (now < endTime) {
         requestAnimationFrame(updateCount);
       } else {
-        setCount(end);
+        count.value = end;
       }
     };
 
     requestAnimationFrame(updateCount);
-  }, [isVisible, end, duration]);
+  });
 
-  const formattedCount = decimals > 0
-    ? count.toFixed(decimals)
-    : Math.floor(count).toString();
+  const formattedCount = computed(() => {
+    const value = decimals > 0
+      ? count.value.toFixed(decimals)
+      : Math.floor(count.value).toString();
+    return value + suffix;
+  });
 
   return {
-    count: formattedCount + suffix,
+    count: formattedCount,
     ref: elementRef
   };
 };
