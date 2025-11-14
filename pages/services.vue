@@ -108,6 +108,28 @@ const services = [
       'Analytics avancées'
     ],
   },
+  {
+    title: 'Cloud, DevOps & Cyber',
+    description: 'Accélérez en confiance : Cloud-native, FinOps, Zero Trust.',
+    icon: Shield,
+    features: [
+      'AWS/Azure/GCP',
+      'CI/CD',
+      'Sécurité applicative',
+      'Infrastructure as Code'
+    ],
+  },
+  {
+    title: 'TMA & Run',
+    description: 'Surveiller, faire évoluer et sécuriser vos applis 24/7.',
+    icon: CheckCircle,
+    features: [
+      'TMA évolutive',
+      'Monitoring 24/7',
+      'Clients satisfaits 99,9%',
+      'Support réactif'
+    ],
+  },
 ];
 
 useHead({
